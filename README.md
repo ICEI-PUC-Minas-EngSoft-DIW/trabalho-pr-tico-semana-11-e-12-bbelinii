@@ -9,7 +9,7 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 - Nome: Bernardo Belini Vale
 - Matricula:
 - Proposta de projeto escolhida: Blog automotivo
-- Breve descrição sobre seu projeto: Um blog automotivo que permite os seus usuarios a navegarem pelas postagens, editar elas ou excluir
+- Breve descrição sobre seu projeto: Um blog automotivo que permite os seus usuarios a navegarem pelas postagens, editar elas ou excluir.
 
 **Print dos testes da API com Postman ou similar**
 
@@ -23,7 +23,7 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 
 **Print da aba NETWORK com requisições Fetch/XHR POST e GET**
 
-![alt text](<public/prints/fetch formulario home.png>)
+![alt text](public/prints/xhr.png)
 
 
 
