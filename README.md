@@ -38,15 +38,15 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 ### Como executar
 
 1. `npm install`
-2. `npm run start` (JSONServer em `http://localhost:3000`)
+2. `npm run start` (JSONServer em `http://localhost:3001`)
 3. Sirva a pasta `public` com um servidor estático (ex.: `npx http-server public -p 5173`) e acesse `http://localhost:5173/`.
 
 ### Prints a capturar (NETWORK)
 
-- GET `/postagens` ao carregar a página inicial.
-- POST `/postagens` ao salvar nova postagem pelo formulário.
-- PUT `/postagens/{id}` ao salvar edição.
-- DELETE `/postagens/{id}` ao excluir.
+- GET `/postagens` ao carregar a página inicial (Network mostra Fetch/XHR).
+- POST `/postagens` ao salvar nova postagem pelo formulário na Home.
+- PUT `/postagens/{id}` ao salvar edição na página de detalhes.
+- DELETE `/postagens/{id}` ao excluir na página de detalhes.
 
 Inclua cada captura na seção de prints acima.
 
@@ -86,9 +86,9 @@ Para iniciar o JSONServer e acessar os arquivos do seu site, siga os seguintes p
    1. **Site Front End**: abra um navegador e acesse o seu site pela seguinte URL: 
       [http://localhost:3000]()
    2. **Site Back End**: abra o navegador e acesse as informações da estrutura de usuários por meio da API REST do JSONServer a partir da seguinte URL: 
-      [http://localhost:3000/usuarios](http://localhost:3000/usuarios)
+      [http://localhost:3001/usuarios](http://localhost:3001/usuarios)
 
-Ao criar suas estruturas de dados no arquivo db.json, você poderá obter estes dados através do endereço: http://localhost:3000/SUA_ESTRUTURA, tal qual como foi feito com a estrutura de usuários. **IMPORTANTE**: Ao editar o arquivo db.json, é necessário parar e reiniciar o JSONServer.
+Ao criar suas estruturas de dados no arquivo db.json, você poderá obter estes dados através do endereço: http://localhost:3001/SUA_ESTRUTURA, tal qual como foi feito com a estrutura de usuários. **IMPORTANTE**: Ao editar o arquivo db.json, é necessário parar e reiniciar o JSONServer.
 
 **IMPORTANTE:** Assim como informado anteriormente, capriche na etapa pois você vai precisar dessa parte para as próximas semanas. 
 

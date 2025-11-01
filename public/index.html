@@ -46,6 +46,18 @@
         <input type="text" id="busca" placeholder="Buscar Postagem...">
         <button id="criar">Criar nova postagem</button>
       </div>
+      <div id="form-container" style="display:none; margin-top:12px;">
+        <form id="form-postagem">
+          <input type="text" id="titulo" name="titulo" placeholder="Título" required>
+          <input type="text" id="autor" name="autor" placeholder="Autor" required>
+          <input type="text" id="data" name="data" placeholder="Data">
+          <input type="text" id="membro" name="membro" placeholder="Membro desde">
+          <input type="text" id="imagem" name="imagem" placeholder="Imagem (caminho)">
+          <input type="text" id="categoria" name="categoria" placeholder="Categoria">
+          <textarea id="texto" name="texto" placeholder="Texto" rows="4" required></textarea>
+          <button type="submit">Salvar postagem</button>
+        </form>
+      </div>
       <h3>Postagens</h3>
       <div class="postagens"></div>
     </section>
@@ -84,12 +96,15 @@
       return article;
     }
 
-    function mostrarPostagens() {
+    let cachePostagens = [];
+
+    async function mostrarPostagens() {
       const container = document.querySelector('.postagens');
       container.innerHTML = '';
 
-      for (let i = 0; i < postagens.length; i++) {
-        const postagem = criarPostagem(postagens[i]);
+      cachePostagens = await carregarPostagens();
+      for (let i = 0; i < cachePostagens.length; i++) {
+        const postagem = criarPostagem(cachePostagens[i]);
         container.appendChild(postagem);
       }
     }
@@ -99,8 +114,8 @@
       const container = document.querySelector('.postagens');
       container.innerHTML = '';
 
-      for (let i = 0; i < postagens.length; i++) {
-        const post = postagens[i];
+      for (let i = 0; i < cachePostagens.length; i++) {
+        const post = cachePostagens[i];
 
         if (post.autor.toLowerCase().includes(termoBusca) || 
             post.texto.toLowerCase().includes(termoBusca)) {
@@ -114,7 +129,27 @@
       mostrarPostagens();
       document.getElementById('busca').oninput = buscarPostagens;
       document.getElementById('criar').onclick = function() {
-        alert('Funcionalidade em desenvolvimento!');
+        const box = document.getElementById('form-container');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      };
+
+      document.getElementById('form-postagem').onsubmit = async function(e) {
+        e.preventDefault();
+        const data = {
+          titulo: document.getElementById('titulo').value,
+          autor: document.getElementById('autor').value,
+          data: document.getElementById('data').value || new Date().toLocaleDateString('pt-BR'),
+          texto: document.getElementById('texto').value,
+          membro: document.getElementById('membro').value || new Date().toLocaleDateString('pt-BR'),
+          imagem: document.getElementById('imagem').value || 'imagens/Perfil 3.png',
+          categoria: document.getElementById('categoria').value || ''
+        };
+
+        await criarPostagem(data);
+        e.target.reset();
+        document.getElementById('form-container').style.display = 'none';
+        await mostrarPostagens();
+        alert('Postagem criada com sucesso!');
       };
     };
   </script>

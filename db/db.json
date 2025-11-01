@@ -8,18 +8,18 @@
       "email": "admin@abc.com"
     },
     {
+      "email": "user_novo@abc.com",
+      "nome": "Usuario Comum Atualizado",
       "id": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
-      "login": "user",
-      "senha": "123",
-      "nome": "Usuario Comum",
-      "email": "user@abc.com"
+      "login": "user_atualizado",
+      "senha": "nova123"
     },
     {
-      "id": "5b4a8f9c-1f2e-4d5a-9c7b-8e6f1a2b3c4d",
-      "login": "editor",
-      "senha": "123",
-      "nome": "Usuario Editor",
-      "email": "editor@abc.com"
+      "email": "novo@teste.com",
+      "nome": "Novo Usuario Teste",
+      "login": "novousuario",
+      "senha": "123456",
+      "id": "ASQUMVv"
     }
   ],
   "postagens": [
@@ -43,33 +43,11 @@
     },
     {
       "id": "2",
-      "autor": "Maria Clara",
-      "data": "10 de setembro de 2025",
-      "texto": "Oi, pessoal! No meu Honda Civic 2014 percebi um ruído seco na dianteira ao passar em valetas. Já troquei as bieletas há alguns meses, mas o barulho voltou. Desconfio de coifas das homocinéticas ou buchas da bandeja. Alguém já passou por isso e tem dica de diagnóstico rápido antes de levar ao mecânico?",
+      "data": "10 de setembro de 2025 - ATUALIZADO",
       "membro": "19/04/2025",
-      "imagem": "imagens/barney.jpeg",
-      "titulo": "Ruído seco na dianteira do Civic 2014",
-      "categoria": "Suspensão",
-      "fotos": [
-        "imagens/barney.jpeg",
-        "imagens/Screenshot_1.png",
-        "imagens/home page.png"
-      ]
-    },
-    {
-      "id": "3",
-      "autor": "Juliana Santos",
-      "data": "08 de setembro de 2025",
-      "texto": "Meu Corolla 2016 começou a vibrar levemente no volante acima de 100 km/h. Fiz balanceamento e alinhamento recentemente, mas a vibração continua. Um amigo comentou que pode ser roda empenada ou pneu com 'flat spot'. Vale a pena rodízio antes de pensar em trocar pneus?",
-      "membro": "23/05/2025",
-      "imagem": "imagens/Perfil 3.png",
-      "titulo": "Vibração no volante acima de 100 km/h",
-      "categoria": "Rodagem",
-      "fotos": [
-        "imagens/Perfil 3.png",
-        "imagens/responnsividade css.jpg",
-        "imagens/Screenshot_1.png"
-      ]
+      "texto": "Oi pessoal, vim compartilhar um problema RESOLVIDO que estava me incomodando no meu Honda Civic...",
+      "autor": "Maria Clara Santos",
+      "imagem": "imagens/barney.jpeg"
     },
     {
       "id": "4",
@@ -100,6 +78,14 @@
         "imagens/home page.png",
         "imagens/Screenshot_1.png"
       ]
+    },
+    {
+      "autor": "Carlos Silva",
+      "data": "15 de dezembro de 2024",
+      "texto": "Compartilhando dicas de manuten��o preventiva para carros esportivos...",
+      "imagem": "imagens/fastback 1.jpg",
+      "membro": "20/11/2024",
+      "id": "ENd99mM"
     }
   ]
 }

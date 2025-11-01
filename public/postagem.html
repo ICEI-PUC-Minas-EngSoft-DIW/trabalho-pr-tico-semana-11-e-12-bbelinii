@@ -44,6 +44,24 @@
                 <div id="galeria" class="galeria"></div>
             </section>
 
+            <section class="edicao-section">
+                <h3>Editar/Excluir</h3>
+                <div class="acoes">
+                    <button id="btn-editar" type="button">Editar</button>
+                    <button id="btn-excluir" type="button">Excluir</button>
+                </div>
+                <form id="form-edicao" style="display:none; margin-top:10px;">
+                    <input type="text" id="e-titulo" placeholder="Título" required>
+                    <input type="text" id="e-autor" placeholder="Autor" required>
+                    <input type="text" id="e-data" placeholder="Data">
+                    <input type="text" id="e-membro" placeholder="Membro desde">
+                    <input type="text" id="e-imagem" placeholder="Imagem (caminho)">
+                    <input type="text" id="e-categoria" placeholder="Categoria">
+                    <textarea id="e-texto" placeholder="Texto" rows="4" required></textarea>
+                    <button type="submit">Salvar alterações</button>
+                </form>
+            </section>
+
             <section class="postagens-section">
                 <h3>Todas as postagens</h3>
                 <div id="todas-postagens" class="postagens-grid"></div>
@@ -138,15 +156,67 @@
         }
 
         const idPostagem = obterParametroUrl('id');
-        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
 
-        if (postagemSelecionada) {
-            renderizarPostagemDetalhe(postagemSelecionada);
-            renderizarGaleria(postagemSelecionada.fotos);
-            renderizarTodasPostagens(postagemSelecionada);
-        } else {
-            document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+        async function carregarDetalhe() {
+            try {
+                const p = await carregarPostagem(idPostagem);
+                if (p && p.id) {
+                    renderizarPostagemDetalhe(p);
+                    renderizarGaleria(p.fotos);
+                    const todas = await carregarPostagens();
+                    renderizarTodasPostagens(p, todas);
+
+                    document.getElementById('e-titulo').value = p.titulo || '';
+                    document.getElementById('e-autor').value = p.autor || '';
+                    document.getElementById('e-data').value = p.data || '';
+                    document.getElementById('e-membro').value = p.membro || '';
+                    document.getElementById('e-imagem').value = p.imagem || '';
+                    document.getElementById('e-categoria').value = p.categoria || '';
+                    document.getElementById('e-texto').value = p.texto || '';
+                } else {
+                    document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+                }
+            } catch (e) {
+                document.getElementById('postagem-conteudo').innerHTML = '<p>Erro ao carregar postagem!</p>';
+            }
         }
+
+        function renderizarTodasPostagens(postAtual, lista) {
+            const container = document.getElementById('todas-postagens');
+            container.innerHTML = '';
+            (lista || []).filter(p => p.id !== postAtual.id).forEach(p => container.appendChild(criarCardPostagem(p)));
+        }
+
+        carregarDetalhe();
+
+        document.getElementById('btn-editar').onclick = function() {
+            const f = document.getElementById('form-edicao');
+            f.style.display = f.style.display === 'none' ? 'block' : 'none';
+        };
+
+        document.getElementById('form-edicao').onsubmit = async function(e) {
+            e.preventDefault();
+            const data = {
+                id: idPostagem,
+                titulo: document.getElementById('e-titulo').value,
+                autor: document.getElementById('e-autor').value,
+                data: document.getElementById('e-data').value,
+                texto: document.getElementById('e-texto').value,
+                membro: document.getElementById('e-membro').value,
+                imagem: document.getElementById('e-imagem').value,
+                categoria: document.getElementById('e-categoria').value
+            };
+            await atualizarPostagem(idPostagem, data);
+            await carregarDetalhe();
+            alert('Postagem atualizada!');
+        };
+
+        document.getElementById('btn-excluir').onclick = async function() {
+            if (confirm('Confirma excluir esta postagem?')) {
+                await excluirPostagem(idPostagem);
+                window.location.href = 'index.html';
+            }
+        };
 
         function voltartela() {
             var voltatela = document.getElementsByClassName("voltar");
