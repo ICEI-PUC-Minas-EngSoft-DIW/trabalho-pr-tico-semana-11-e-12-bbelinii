@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Detalhes da Postagem - 2-Step</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="postagens.css?v=2">
 </head>
+
 <body>
     <header class="site-header">
         <div class="header-inner">
@@ -22,75 +28,136 @@
             </nav>
         </div>
     </header>
-    
-    <main class="container">
-        <div class="postagem-detalhes">
-            <div id="postagem-conteudo">
-            </div>
-            <div class="voltar">
-                <a href="index.html">Voltar para a página inicial</a>
-            </div>
+    <main>
+        <div class="voltar">
+            <button>Voltar para a página inicial</button>
         </div>
     </main>
-    
+
+    <main class="container detalhe">
+        <h1 class="detalhes-titulo">Detalhes da Postagem</h1>
+        <div class="postagem-detalhes">
+            <div id="postagem-conteudo"></div>
+
+            <section class="galeria-section">
+                <h3>Fotos da Postagem</h3>
+                <div id="galeria" class="galeria"></div>
+            </section>
+
+            <section class="postagens-section">
+                <h3>Todas as postagens</h3>
+                <div id="todas-postagens" class="postagens-grid"></div>
+            </section>
+
+        </div>
+    </main>
+
     <footer class="site-footer">
         <p>Copyright @ 2025 - 2-Step Automotive Blog</p>
         <img src="imagens/Logo Footer.png" alt="Logo footer">
     </footer>
-    
-    <script src="app.js"></script>
+
+    <script src="app.js?v=3"></script>
     <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+
         function obterParametroUrl(nome) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
         }
-        
-        const idPostagem = obterParametroUrl('id');
-        
-        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
-        
-        if (postagemSelecionada) {
-            const comentariosHTML = (postagemSelecionada.comentarios && postagemSelecionada.comentarios.length > 0)
-                ? `<ul class="lista-comentarios">${postagemSelecionada.comentarios.map(c => `
-                        <li>
-                            <p class="comentario-texto">${c.texto}</p>
-                            <p class="comentario-meta">Por ${c.autor} em ${c.data}</p>
-                        </li>`).join('')}</ul>`
-                : `<p class="sem-comentarios">Sem comentários ainda.</p>`;
 
-            const galeriaHTML = (postagemSelecionada.galeria && postagemSelecionada.galeria.length > 0)
-                ? `<div class="galeria-grid">${postagemSelecionada.galeria.map(src => `<img src="${src}" alt="Imagem relacionada">`).join('')}</div>`
-                : `<p class="sem-galeria">Sem imagens relacionadas.</p>`;
+        function calcularTempoLeitura(texto) {
+            const palavras = texto.trim().split(/\s+/).length;
+            const minutos = Math.max(1, Math.round(palavras / 200));
+            return `${minutos} min de leitura`;
+        }
 
+        function renderizarPostagemDetalhe(post) {
+            const tempoLeitura = calcularTempoLeitura(post.texto);
             const conteudoHTML = `
                 <article class="postagem-completa">
-                    <div class="postagem-header">
-                        <img src="${postagemSelecionada.imagem}" alt="${postagemSelecionada.autor}" class="autor-imagem">
-                        <div>
-                            <h2>${postagemSelecionada.autor}</h2>
-                            <p class="data">Publicado em: ${postagemSelecionada.data}</p>
-                            <p class="membro">Membro desde: ${postagemSelecionada.membro}</p>
-                            ${postagemSelecionada.categoria ? `<p class="categoria">Categoria: ${postagemSelecionada.categoria}</p>` : ''}
+                    <div class="postagem-hero">
+                        <img src="${post.imagem}" alt="${post.autor}" class="hero-imagem">
+                        <div class="hero-info">
+                            <h2 class="hero-titulo">${post.titulo || 'Postagem'}</h2>
+                            <ul class="hero-metas">
+                                <li><strong>Autor:</strong> ${post.autor}</li>
+                                <li><strong>Publicado em:</strong> ${post.data}</li>
+                                <li><strong>Membro desde:</strong> ${post.membro}</li>
+                                <li><strong>Categoria:</strong> ${post.categoria || '—'}</li>
+                                <li><strong>Leitura:</strong> ${tempoLeitura}</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="postagem-texto">
-                        <p>${postagemSelecionada.texto}</p>
+                        <p>${post.texto}</p>
                     </div>
-                    <section class="comentarios">
-                        <h3>Comentários</h3>
-                        ${comentariosHTML}
-                    </section>
-                    <section class="galeria">
-                        <h3>Imagens relacionadas</h3>
-                        ${galeriaHTML}
-                    </section>
                 </article>
             `;
-            
             document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+        }
+
+        function renderizarGaleria(fotos) {
+            const container = document.getElementById('galeria');
+            container.innerHTML = '';
+            (fotos || []).forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Foto do item';
+                container.appendChild(img);
+            });
+        }
+
+        function criarCardPostagem(post) {
+            const card = document.createElement('article');
+            card.className = 'postagem-card';
+            const resumo = post.texto.length > 110 ? post.texto.substring(0, 110) + '...' : post.texto;
+            card.innerHTML = `
+                <img src="${post.imagem}" alt="${post.autor}">
+                <div class="card-conteudo">
+                    <h4>${post.titulo || post.autor}</h4>
+                    <p class="card-meta">${post.autor} • ${post.data}</p>
+                    <p class="card-texto">${resumo}</p>
+                </div>
+            `;
+            card.onclick = () => {
+                window.location.href = 'postagem.html?id=' + post.id;
+            };
+            return card;
+        }
+
+        function renderizarTodasPostagens(postAtual) {
+            const container = document.getElementById('todas-postagens');
+            container.innerHTML = '';
+            const lista = postagens.filter(p => p.id !== postAtual.id);
+            lista.forEach(p => container.appendChild(criarCardPostagem(p)));
+        }
+
+        const idPostagem = obterParametroUrl('id');
+        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
+
+        if (postagemSelecionada) {
+            renderizarPostagemDetalhe(postagemSelecionada);
+            renderizarGaleria(postagemSelecionada.fotos);
+            renderizarTodasPostagens(postagemSelecionada);
         } else {
             document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
         }
+
+        function voltartela() {
+            var voltatela = document.getElementsByClassName("voltar");
+            if (voltatela.length > 0) {
+                voltatela[0].onclick = function () {
+                    window.location.href = "index.html"
+                }
+            }
+        }
+        voltartela()
     </script>
 </body>
+
 </html>
