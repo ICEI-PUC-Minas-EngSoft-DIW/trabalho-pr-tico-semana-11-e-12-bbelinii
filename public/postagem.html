@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Postagem - 2-Step</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <img src="imagens/logo.png" alt="2-Step logo">
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Categorias</a></li>
+                    <li><a href="#">Postagens</a></li>
+                    <li><a href="#">Entrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="postagem-detalhes">
+            <div id="postagem-conteudo">
+            </div>
+            <div class="voltar">
+                <a href="index.html">Voltar para a página inicial</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <p>Copyright @ 2025 - 2-Step Automotive Blog</p>
+        <img src="imagens/Logo Footer.png" alt="Logo footer">
+    </footer>
+    
+    <script src="app.js"></script>
+    <script>
+        function obterParametroUrl(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+        
+        const idPostagem = obterParametroUrl('id');
+        
+        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
+        
+        if (postagemSelecionada) {
+            const conteudoHTML = `
+                <article class="postagem-completa">
+                    <div class="postagem-header">
+                        <img src="${postagemSelecionada.imagem}" alt="${postagemSelecionada.autor}" class="autor-imagem">
+                        <h2>${postagemSelecionada.autor}</h2>
+                        <p class="data">Publicado em: ${postagemSelecionada.data}</p>
+                        <p class="membro">Membro desde: ${postagemSelecionada.membro}</p>
+                    </div>
+                    <div class="postagem-texto">
+                        <p>${postagemSelecionada.texto}</p>
+                    </div>
+                </article>
+            `;
+            
+            document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+        } else {
+            document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+        }
+    </script>
+</body>
+</html>
