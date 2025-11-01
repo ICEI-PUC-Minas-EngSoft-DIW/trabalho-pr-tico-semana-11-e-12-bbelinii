@@ -25,6 +25,31 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 
 <<  COLOQUE A IMAGEM AQUI >>
 
+## Etapa 3 — CRUD dinâmico com JSONServer
+
+- Páginas alteradas: `public/index.html`, `public/postagem.html`, `public/app.js`, `public/styles.css`.
+- Agora os dados são consumidos via `fetch` da API (`http://localhost:3000/postagens`).
+- O CRUD completo foi implementado:
+  - Listar: carregamento inicial e busca dinâmica.
+  - Criar: formulário na página inicial.
+  - Editar: formulário na página inicial e também na página de detalhes.
+  - Excluir: botão na listagem e na página de detalhes.
+
+### Como executar
+
+1. `npm install`
+2. `npm run start` (JSONServer em `http://localhost:3000`)
+3. Sirva a pasta `public` com um servidor estático (ex.: `npx http-server public -p 5173`) e acesse `http://localhost:5173/`.
+
+### Prints a capturar (NETWORK)
+
+- GET `/postagens` ao carregar a página inicial.
+- POST `/postagens` ao salvar nova postagem pelo formulário.
+- PUT `/postagens/{id}` ao salvar edição.
+- DELETE `/postagens/{id}` ao excluir.
+
+Inclua cada captura na seção de prints acima.
+
 ## **Orientações Gerais**
 
 Nesse projeto você vai encontrar a seguinte estrutura base:

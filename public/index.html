@@ -44,6 +44,20 @@
                 <input type="text" id="busca" placeholder="Buscar Postagem...">
                 <button id="criar">Criar nova postagem</button>
             </div>
+            <form id="form-postagem" class="form-postagem">
+                <input type="hidden" id="post-id">
+                <div class="grid">
+                    <input type="text" id="autor" placeholder="Autor" required>
+                    <input type="text" id="data" placeholder="Data de publicação" required>
+                    <input type="text" id="membro" placeholder="Membro desde" required>
+                    <input type="text" id="imagem" placeholder="URL da imagem" value="imagens/sherek.jpg" required>
+                </div>
+                <textarea id="texto" placeholder="Texto" rows="4" required></textarea>
+                <div class="acoes">
+                    <button type="submit" id="salvar">Salvar</button>
+                    <button type="button" id="limpar">Limpar</button>
+                </div>
+            </form>
             <h3>Postagens</h3>
             <div class="postagens">
                 <article class="postagem">
@@ -89,11 +103,28 @@
                     <p class="data">Data de publicação: ${post.data}</p>
                     <p class="texto">${textoResumido}</p>
                     <p class="membro">Membro desde: ${post.membro}</p>
+                    <div class="crud-botoes">
+                        <button class="editar">Editar</button>
+                        <button class="excluir">Excluir</button>
+                    </div>
                 </div>
             `;
             
             article.onclick = function() {
                 window.location.href = 'postagem.html?id=' + post.id;
+            };
+
+            article.querySelector('.editar').onclick = function(e) {
+                e.stopPropagation();
+                preencherFormulario(post);
+            };
+            article.querySelector('.excluir').onclick = async function(e) {
+                e.stopPropagation();
+                if (confirm('Deseja excluir esta postagem?')) {
+                    await window.deletarPostagemAPI(post.id);
+                    await window.carregarPostagens();
+                    mostrarPostagens();
+                }
             };
             
             return article;
@@ -114,8 +145,9 @@
             const container = document.querySelector('.postagens');
             container.innerHTML = '';
             
-            for (let i = 0; i < postagens.length; i++) {
-                const post = postagens[i];
+            if (!window.postagens) return;
+            for (let i = 0; i < window.postagens.length; i++) {
+                const post = window.postagens[i];
                 
                 if (post.autor.toLowerCase().includes(termoBusca) || 
                     post.texto.toLowerCase().includes(termoBusca)) {
@@ -126,25 +158,60 @@
             }
         }
         
-        async function criarViaPrompt() {
-            const autor = prompt('Autor:');
-            if (!autor) return;
-            const data = prompt('Data de publicação:');
-            const texto = prompt('Texto:');
-            const membro = prompt('Membro desde:');
-            const imagem = prompt('URL da imagem (ex: imagens/sherek.jpg):') || 'imagens/sherek.jpg';
-            const novo = { autor, data, texto, membro, imagem };
-            const criado = await window.criarPostagemAPI(novo);
+        function limparFormulario() {
+            document.getElementById('post-id').value = '';
+            document.getElementById('autor').value = '';
+            document.getElementById('data').value = '';
+            document.getElementById('texto').value = '';
+            document.getElementById('membro').value = '';
+            document.getElementById('imagem').value = 'imagens/sherek.jpg';
+        }
+        
+        function preencherFormulario(post) {
+            document.getElementById('post-id').value = post.id || '';
+            document.getElementById('autor').value = post.autor || '';
+            document.getElementById('data').value = post.data || '';
+            document.getElementById('texto').value = post.texto || '';
+            document.getElementById('membro').value = post.membro || '';
+            document.getElementById('imagem').value = post.imagem || 'imagens/sherek.jpg';
+        }
+        
+        async function salvarFormulario(event) {
+            event.preventDefault();
+            const id = document.getElementById('post-id').value.trim();
+            const novo = {
+                autor: document.getElementById('autor').value.trim(),
+                data: document.getElementById('data').value.trim(),
+                texto: document.getElementById('texto').value.trim(),
+                membro: document.getElementById('membro').value.trim(),
+                imagem: document.getElementById('imagem').value.trim() || 'imagens/sherek.jpg'
+            };
+            if (!novo.autor || !novo.data || !novo.texto || !novo.membro) {
+                alert('Preencha todos os campos.');
+                return;
+            }
+            if (id) {
+                await window.atualizarPostagemAPI(id, { id, ...novo });
+                alert('Postagem atualizada!');
+            } else {
+                const criado = await window.criarPostagemAPI(novo);
+                alert('Postagem criada com id ' + criado.id);
+            }
+            limparFormulario();
             await window.carregarPostagens();
             mostrarPostagens();
-            alert('Postagem criada com id ' + criado.id);
         }
 
         window.onload = async function() {
             await window.carregarPostagens();
             mostrarPostagens();
             document.getElementById('busca').oninput = buscarPostagens;
-            document.getElementById('criar').onclick = criarViaPrompt;
+            document.getElementById('criar').onclick = function(){
+                limparFormulario();
+                document.getElementById('autor').focus();
+            };
+            document.getElementById('form-postagem').addEventListener('submit', salvarFormulario);
+            document.getElementById('limpar').onclick = limparFormulario;
         };
     </script>
 </body>

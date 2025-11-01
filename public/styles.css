@@ -146,6 +146,23 @@ body {
 .conteudo .data { color:#666; font-size:13px; margin:0 0 10px; }
 .conteudo .texto { margin:0 0 10px; line-height:1.6; color:#222; }
 .conteudo .membro { margin:0; color:#777; font-size:13px; }
+.crud-botoes { display:flex; gap:8px; margin-top:8px; }
+.crud-botoes button { 
+    background:#007BFF; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; 
+}
+.crud-botoes .excluir { background:#dc3545; }
+
+.form-postagem { 
+    background:#fff; padding:14px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.08); 
+    margin-bottom:18px; 
+}
+.form-postagem .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
+.form-postagem input, .form-postagem textarea { 
+    padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; 
+}
+.form-postagem .acoes { display:flex; gap:10px; margin-top:10px; }
+.form-postagem button { background:#007BFF; color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
+.form-postagem #excluir { background:#dc3545; }
 
 .site-footer {
     background: linear-gradient(90deg,#111 0%, #6F6F6F 100%);
@@ -177,10 +194,12 @@ body {
         margin-bottom: 16px; 
     }
     .busca input { width: 60%; }
+    .form-postagem .grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 420px) {
     .banner p { font-size: 18px; }
     .site-nav ul { gap: 12px; }
     .busca input { width: 100%; }
     .postagem { padding: 15px; }
+    .form-postagem .grid { grid-template-columns: 1fr; }
 }

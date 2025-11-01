@@ -27,6 +27,20 @@
         <div class="postagem-detalhes">
             <div id="postagem-conteudo">
             </div>
+            <form id="form-editar" class="form-postagem" style="margin-top:14px;">
+                <input type="hidden" id="post-id">
+                <div class="grid">
+                    <input type="text" id="autor" placeholder="Autor" required>
+                    <input type="text" id="data" placeholder="Data de publicação" required>
+                    <input type="text" id="membro" placeholder="Membro desde" required>
+                    <input type="text" id="imagem" placeholder="URL da imagem" required>
+                </div>
+                <textarea id="texto" placeholder="Texto" rows="4" required></textarea>
+                <div class="acoes">
+                    <button type="submit">Salvar alterações</button>
+                    <button type="button" id="excluir">Excluir postagem</button>
+                </div>
+            </form>
             <div class="voltar">
                 <a href="index.html">Voltar para a página inicial</a>
             </div>
@@ -69,12 +83,44 @@
                     </article>
                 `;
                 document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+
+                // preencher formulário
+                document.getElementById('post-id').value = p.id;
+                document.getElementById('autor').value = p.autor;
+                document.getElementById('data').value = p.data;
+                document.getElementById('membro').value = p.membro;
+                document.getElementById('imagem').value = p.imagem;
+                document.getElementById('texto').value = p.texto;
             } catch (e) {
                 document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
             }
         }
 
         carregarDetalhe();
+
+        document.getElementById('form-editar').addEventListener('submit', async function(e){
+            e.preventDefault();
+            const id = document.getElementById('post-id').value;
+            const novo = {
+                id,
+                autor: document.getElementById('autor').value.trim(),
+                data: document.getElementById('data').value.trim(),
+                texto: document.getElementById('texto').value.trim(),
+                membro: document.getElementById('membro').value.trim(),
+                imagem: document.getElementById('imagem').value.trim()
+            };
+            await window.atualizarPostagemAPI(id, novo);
+            alert('Postagem atualizada!');
+            await carregarDetalhe();
+        });
+        document.getElementById('excluir').addEventListener('click', async function(){
+            const id = document.getElementById('post-id').value;
+            if (confirm('Deseja excluir esta postagem?')) {
+                await window.deletarPostagemAPI(id);
+                alert('Excluída com sucesso!');
+                window.location.href = 'index.html';
+            }
+        });
     </script>
 </body>
 </html>
