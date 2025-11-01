@@ -146,23 +146,6 @@ body {
 .conteudo .data { color:#666; font-size:13px; margin:0 0 10px; }
 .conteudo .texto { margin:0 0 10px; line-height:1.6; color:#222; }
 .conteudo .membro { margin:0; color:#777; font-size:13px; }
-.crud-botoes { display:flex; gap:8px; margin-top:8px; }
-.crud-botoes button { 
-    background:#007BFF; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; 
-}
-.crud-botoes .excluir { background:#dc3545; }
-
-.form-postagem { 
-    background:#fff; padding:14px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.08); 
-    margin-bottom:18px; 
-}
-.form-postagem .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
-.form-postagem input, .form-postagem textarea { 
-    padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; 
-}
-.form-postagem .acoes { display:flex; gap:10px; margin-top:10px; }
-.form-postagem button { background:#007BFF; color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
-.form-postagem #excluir { background:#dc3545; }
 
 .site-footer {
     background: linear-gradient(90deg,#111 0%, #6F6F6F 100%);
@@ -194,12 +177,125 @@ body {
         margin-bottom: 16px; 
     }
     .busca input { width: 60%; }
-    .form-postagem .grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 420px) {
     .banner p { font-size: 18px; }
     .site-nav ul { gap: 12px; }
     .busca input { width: 100%; }
     .postagem { padding: 15px; }
-    .form-postagem .grid { grid-template-columns: 1fr; }
+}
+
+/* Slider de destaques */
+.destaques { 
+    max-width: 1200px; 
+    margin: 0 0 10px; 
+}
+.destaques h3 { margin: 0 0 10px; }
+.slider { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+.slider-viewport { 
+    overflow: hidden; 
+    flex: 1; 
+}
+.slider-track { 
+    display: flex; 
+    gap: 12px; 
+}
+.slide { 
+    background: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); 
+    padding: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    min-width: 280px; 
+    cursor: pointer; 
+    transition: transform 0.2s ease; 
+}
+.slide:hover { transform: translateY(-2px); }
+.slide img { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #ddd; 
+}
+.slider-btn { 
+    background: #007BFF; 
+    color: #fff; 
+    border: none; 
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+.slider-btn:hover { background: #0056b3; }
+
+/* Detalhe da postagem */
+.postagem-completa { 
+    background: #fff; 
+    padding: 16px; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); 
+}
+.postagem-header { 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+}
+.postagem-header .autor-imagem { 
+    width: 88px; 
+    height: 88px; 
+    border-radius: 50%; 
+    border: 2px solid #ddd; 
+    object-fit: cover; 
+}
+.postagem-texto { 
+    margin-top: 12px; 
+    line-height: 1.8; 
+    color: #222; 
+}
+.comentarios { margin-top: 18px; }
+.comentarios h3 { margin: 0 0 8px; }
+.lista-comentarios { 
+    list-style: none; 
+    padding: 0; 
+    margin: 10px 0 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+}
+.lista-comentarios li { 
+    background: #f7fbff; 
+    border: 1px solid #e3f0fb; 
+    border-radius: 8px; 
+    padding: 10px; 
+}
+.comentario-texto { margin: 0 0 6px; }
+.comentario-meta { margin: 0; font-size: 12px; color: #666; }
+.galeria { margin-top: 18px; }
+.galeria h3 { margin: 0 0 8px; }
+.galeria-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+}
+.galeria-grid img { 
+    width: 100%; 
+    border-radius: 8px; 
+    object-fit: cover; 
+}
+
+@media (max-width: 780px) {
+    .slide { min-width: 240px; }
+    .postagem-header { flex-direction: column; align-items: flex-start; }
+    .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 420px) {
+    .slider-btn { display: none; }
+    .slide { min-width: 220px; }
+    .galeria-grid { grid-template-columns: 1fr; }
 }

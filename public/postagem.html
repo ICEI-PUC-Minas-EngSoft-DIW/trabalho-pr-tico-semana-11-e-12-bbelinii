@@ -27,20 +27,6 @@
         <div class="postagem-detalhes">
             <div id="postagem-conteudo">
             </div>
-            <form id="form-editar" class="form-postagem" style="margin-top:14px;">
-                <input type="hidden" id="post-id">
-                <div class="grid">
-                    <input type="text" id="autor" placeholder="Autor" required>
-                    <input type="text" id="data" placeholder="Data de publicação" required>
-                    <input type="text" id="membro" placeholder="Membro desde" required>
-                    <input type="text" id="imagem" placeholder="URL da imagem" required>
-                </div>
-                <textarea id="texto" placeholder="Texto" rows="4" required></textarea>
-                <div class="acoes">
-                    <button type="submit">Salvar alterações</button>
-                    <button type="button" id="excluir">Excluir postagem</button>
-                </div>
-            </form>
             <div class="voltar">
                 <a href="index.html">Voltar para a página inicial</a>
             </div>
@@ -58,69 +44,53 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
         }
+        
+        const idPostagem = obterParametroUrl('id');
+        
+        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
+        
+        if (postagemSelecionada) {
+            const comentariosHTML = (postagemSelecionada.comentarios && postagemSelecionada.comentarios.length > 0)
+                ? `<ul class="lista-comentarios">${postagemSelecionada.comentarios.map(c => `
+                        <li>
+                            <p class="comentario-texto">${c.texto}</p>
+                            <p class="comentario-meta">Por ${c.autor} em ${c.data}</p>
+                        </li>`).join('')}</ul>`
+                : `<p class="sem-comentarios">Sem comentários ainda.</p>`;
 
-        async function carregarDetalhe() {
-            const idPostagem = obterParametroUrl('id');
-            if (!idPostagem) {
-                document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
-                return;
-            }
-            try {
-                const resp = await fetch(`${window.API_URL}/postagens/${idPostagem}`);
-                if (!resp.ok) throw new Error('Erro ao carregar');
-                const p = await resp.json();
-                const conteudoHTML = `
-                    <article class="postagem-completa">
-                        <div class="postagem-header">
-                            <img src="${p.imagem}" alt="${p.autor}" class="autor-imagem">
-                            <h2>${p.autor}</h2>
-                            <p class="data">Publicado em: ${p.data}</p>
-                            <p class="membro">Membro desde: ${p.membro}</p>
-                        </div>
-                        <div class="postagem-texto">
-                            <p>${p.texto}</p>
-                        </div>
-                    </article>
-                `;
-                document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+            const galeriaHTML = (postagemSelecionada.galeria && postagemSelecionada.galeria.length > 0)
+                ? `<div class="galeria-grid">${postagemSelecionada.galeria.map(src => `<img src="${src}" alt="Imagem relacionada">`).join('')}</div>`
+                : `<p class="sem-galeria">Sem imagens relacionadas.</p>`;
 
-                // preencher formulário
-                document.getElementById('post-id').value = p.id;
-                document.getElementById('autor').value = p.autor;
-                document.getElementById('data').value = p.data;
-                document.getElementById('membro').value = p.membro;
-                document.getElementById('imagem').value = p.imagem;
-                document.getElementById('texto').value = p.texto;
-            } catch (e) {
-                document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
-            }
+            const conteudoHTML = `
+                <article class="postagem-completa">
+                    <div class="postagem-header">
+                        <img src="${postagemSelecionada.imagem}" alt="${postagemSelecionada.autor}" class="autor-imagem">
+                        <div>
+                            <h2>${postagemSelecionada.autor}</h2>
+                            <p class="data">Publicado em: ${postagemSelecionada.data}</p>
+                            <p class="membro">Membro desde: ${postagemSelecionada.membro}</p>
+                            ${postagemSelecionada.categoria ? `<p class="categoria">Categoria: ${postagemSelecionada.categoria}</p>` : ''}
+                        </div>
+                    </div>
+                    <div class="postagem-texto">
+                        <p>${postagemSelecionada.texto}</p>
+                    </div>
+                    <section class="comentarios">
+                        <h3>Comentários</h3>
+                        ${comentariosHTML}
+                    </section>
+                    <section class="galeria">
+                        <h3>Imagens relacionadas</h3>
+                        ${galeriaHTML}
+                    </section>
+                </article>
+            `;
+            
+            document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+        } else {
+            document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
         }
-
-        carregarDetalhe();
-
-        document.getElementById('form-editar').addEventListener('submit', async function(e){
-            e.preventDefault();
-            const id = document.getElementById('post-id').value;
-            const novo = {
-                id,
-                autor: document.getElementById('autor').value.trim(),
-                data: document.getElementById('data').value.trim(),
-                texto: document.getElementById('texto').value.trim(),
-                membro: document.getElementById('membro').value.trim(),
-                imagem: document.getElementById('imagem').value.trim()
-            };
-            await window.atualizarPostagemAPI(id, novo);
-            alert('Postagem atualizada!');
-            await carregarDetalhe();
-        });
-        document.getElementById('excluir').addEventListener('click', async function(){
-            const id = document.getElementById('post-id').value;
-            if (confirm('Deseja excluir esta postagem?')) {
-                await window.deletarPostagemAPI(id);
-                alert('Excluída com sucesso!');
-                window.location.href = 'index.html';
-            }
-        });
     </script>
 </body>
 </html>
