@@ -70,7 +70,7 @@ npx json-server ./db/db.json --port 3001
 ### GET - Listar todas as postagens
 - **Método**: GET
 - **URL**: `http://localhost:3001/postagens`
-- **Resultado esperado**: Lista com 3 postagens
+- **Resultado esperado**: Lista com 5 postagens
 
 ### GET - Buscar postagem por ID
 - **Método**: GET
