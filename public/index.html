@@ -102,9 +102,9 @@
         function mostrarPostagens() {
             const container = document.querySelector('.postagens');
             container.innerHTML = '';
-            
-            for (let i = 0; i < postagens.length; i++) {
-                const postagem = criarPostagem(postagens[i]);
+            if (!window.postagens || !Array.isArray(window.postagens)) return;
+            for (let i = 0; i < window.postagens.length; i++) {
+                const postagem = criarPostagem(window.postagens[i]);
                 container.appendChild(postagem);
             }
         }
@@ -126,14 +126,25 @@
             }
         }
         
-        window.onload = function() {
+        async function criarViaPrompt() {
+            const autor = prompt('Autor:');
+            if (!autor) return;
+            const data = prompt('Data de publicação:');
+            const texto = prompt('Texto:');
+            const membro = prompt('Membro desde:');
+            const imagem = prompt('URL da imagem (ex: imagens/sherek.jpg):') || 'imagens/sherek.jpg';
+            const novo = { autor, data, texto, membro, imagem };
+            const criado = await window.criarPostagemAPI(novo);
+            await window.carregarPostagens();
             mostrarPostagens();
-            
+            alert('Postagem criada com id ' + criado.id);
+        }
+
+        window.onload = async function() {
+            await window.carregarPostagens();
+            mostrarPostagens();
             document.getElementById('busca').oninput = buscarPostagens;
-            
-            document.getElementById('criar').onclick = function() {
-                alert('Funcionalidade em desenvolvimento!');
-            };
+            document.getElementById('criar').onclick = criarViaPrompt;
         };
     </script>
 </body>

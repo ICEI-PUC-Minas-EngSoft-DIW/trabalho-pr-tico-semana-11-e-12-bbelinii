@@ -13,6 +13,39 @@
       "senha": "123",
       "nome": "Usuario Comum",
       "email": "user@abc.com"
+    },
+    {
+      "id": "5b4a8f9c-1f2e-4d5a-9c7b-8e6f1a2b3c4d",
+      "login": "editor",
+      "senha": "123",
+      "nome": "Usuario Editor",
+      "email": "editor@abc.com"
+    }
+  ],
+  "postagens": [
+    {
+      "id": "1",
+      "autor": "Pedro Henrique",
+      "data": "12 de setembro de 2025",
+      "texto": "Fala pessoal, passando pra compartilhar uma situação chata que rolou com meu Fastback Abarth...",
+      "membro": "10/06/2025",
+      "imagem": "imagens/sherek.jpg"
+    },
+    {
+      "id": "2",
+      "autor": "Maria Clara",
+      "data": "10 de setembro de 2025",
+      "texto": "Oi pessoal, vim compartilhar um problema que está me incomodando no meu Honda Civic...",
+      "membro": "19/04/2025",
+      "imagem": "imagens/barney.jpeg"
+    },
+    {
+      "id": "3",
+      "autor": "João Silva",
+      "data": "05 de setembro de 2025",
+      "texto": "Compartilhando minha experiência com reprogramação eletrônica no meu carro...",
+      "membro": "01/03/2025",
+      "imagem": "imagens/sherek.jpg"
     }
   ]
 }

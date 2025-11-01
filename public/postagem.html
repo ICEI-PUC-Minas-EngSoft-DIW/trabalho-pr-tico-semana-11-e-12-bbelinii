@@ -44,30 +44,37 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
         }
-        
-        const idPostagem = obterParametroUrl('id');
-        
-        const postagemSelecionada = postagens.find(post => post.id === idPostagem);
-        
-        if (postagemSelecionada) {
-            const conteudoHTML = `
-                <article class="postagem-completa">
-                    <div class="postagem-header">
-                        <img src="${postagemSelecionada.imagem}" alt="${postagemSelecionada.autor}" class="autor-imagem">
-                        <h2>${postagemSelecionada.autor}</h2>
-                        <p class="data">Publicado em: ${postagemSelecionada.data}</p>
-                        <p class="membro">Membro desde: ${postagemSelecionada.membro}</p>
-                    </div>
-                    <div class="postagem-texto">
-                        <p>${postagemSelecionada.texto}</p>
-                    </div>
-                </article>
-            `;
-            
-            document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
-        } else {
-            document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+
+        async function carregarDetalhe() {
+            const idPostagem = obterParametroUrl('id');
+            if (!idPostagem) {
+                document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+                return;
+            }
+            try {
+                const resp = await fetch(`${window.API_URL}/postagens/${idPostagem}`);
+                if (!resp.ok) throw new Error('Erro ao carregar');
+                const p = await resp.json();
+                const conteudoHTML = `
+                    <article class="postagem-completa">
+                        <div class="postagem-header">
+                            <img src="${p.imagem}" alt="${p.autor}" class="autor-imagem">
+                            <h2>${p.autor}</h2>
+                            <p class="data">Publicado em: ${p.data}</p>
+                            <p class="membro">Membro desde: ${p.membro}</p>
+                        </div>
+                        <div class="postagem-texto">
+                            <p>${p.texto}</p>
+                        </div>
+                    </article>
+                `;
+                document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+            } catch (e) {
+                document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+            }
         }
+
+        carregarDetalhe();
     </script>
 </body>
 </html>
