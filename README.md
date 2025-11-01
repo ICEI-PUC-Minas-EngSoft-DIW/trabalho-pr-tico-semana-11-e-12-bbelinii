@@ -6,49 +6,26 @@ Para esse projeto, além de mudarmos o JSON para o JSON Server, vamos permitir o
 
 ## Informações do trabalho
 
-- Nome:
+- Nome: Bernardo Belini Vale
 - Matricula:
-- Proposta de projeto escolhida:
-- Breve descrição sobre seu projeto:
+- Proposta de projeto escolhida: Blog automotivo
+- Breve descrição sobre seu projeto: Um blog automotivo que permite os seus usuarios a navegarem pelas postagens, editar elas ou excluir
 
 **Print dos testes da API com Postman ou similar**
 
-<< COLOQUE A IMAGEM GET AQUI >>
+![alt text](public/prints/05-get-usuarios-ap-s-altera-es.png)
 
-<< COLOQUE A IMAGEM POST AQUI >>
+![alt text](public/prints/08-post-postagens-cria-o.png)
 
-<< COLOQUE A IMAGEM PUT AQUI >>
+![alt text](public/prints/03-put-usuarios-id-atualiza-o.png)
 
-<< COLOQUE A IMAGEM DELETE AQUI >>
+![alt text](public/prints/10-delete-postagens-3-remo-o.png)
 
 **Print da aba NETWORK com requisições Fetch/XHR POST e GET**
 
-<<  COLOQUE A IMAGEM AQUI >>
+![alt text](<public/prints/fetch formulario home.png>)
 
-## Etapa 3 — CRUD dinâmico com JSONServer
 
-- Páginas alteradas: `public/index.html`, `public/postagem.html`, `public/app.js`, `public/styles.css`.
-- Agora os dados são consumidos via `fetch` da API (`http://localhost:3000/postagens`).
-- O CRUD completo foi implementado:
-  - Listar: carregamento inicial e busca dinâmica.
-  - Criar: formulário na página inicial.
-  - Editar: formulário na página inicial e também na página de detalhes.
-  - Excluir: botão na listagem e na página de detalhes.
-
-### Como executar
-
-1. `npm install`
-2. `npm run start` (JSONServer em `http://localhost:3001`)
-3. Sirva a pasta `public` com um servidor estático (ex.: `npx http-server public -p 5173`) e acesse `http://localhost:5173/`.
-
-### Prints a capturar (NETWORK)
-
-- GET `/postagens` ao carregar a página inicial (Network mostra Fetch/XHR).
-- POST `/postagens` ao salvar nova postagem pelo formulário na Home.
-- PUT `/postagens/{id}` ao salvar edição na página de detalhes.
-- DELETE `/postagens/{id}` ao excluir na página de detalhes.
-
-Inclua cada captura na seção de prints acima.
 
 ## **Orientações Gerais**
 

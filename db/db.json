@@ -24,30 +24,19 @@
   ],
   "postagens": [
     {
-      "id": "1",
-      "autor": "Pedro Henrique",
-      "data": "12 de setembro de 2025",
-      "texto": "Fala pessoal, passando pra compartilhar uma situação chata que rolou com meu Fastback Abarth. Sempre gostei do carro, mas ultimamente venho percebendo um barulho estranho na suspensão, especialmente quando passo por buracos ou pisos irregulares. Parece um rangido que não tinha antes, e tô começando a ficar preocupado. Já conferi as buchas e parece que algumas estão meio gastas, mas ainda não levei no mecânico para um diagnóstico mais detalhado.",
-      "membro": "10/06/2025",
-      "imagem": "imagens/sherek.jpg",
-      "titulo": "Rangido na suspensão do Fastback Abarth",
+      "id": "2",
+      "autor": "Maria Clara Santos",
+      "data": "10 de setembro de 2025 - ATUALIZADO",
+      "texto": "Oi pessoal, vim compartilhar um problema RESOLVIDO que estava me incomodando no meu Honda Civic...",
+      "membro": "19/04/2025",
+      "imagem": "imagens/barney.jpeg",
+      "titulo": "Ruído seco na dianteira do Civic 2014",
       "categoria": "Suspensão",
       "fotos": [
-        "imagens/fastback 1.jpg",
-        "imagens/fastback 2.jpg",
-        "imagens/fastback 3.jpg",
-        "imagens/fastback 5.jpg",
-        "imagens/fastback 4.jpg",
-        "imagens/fastback 6.jpg"
+        "imagens/barney.jpeg",
+        "imagens/Screenshot_1.png",
+        "imagens/home page.png"
       ]
-    },
-    {
-      "id": "2",
-      "data": "10 de setembro de 2025 - ATUALIZADO",
-      "membro": "19/04/2025",
-      "texto": "Oi pessoal, vim compartilhar um problema RESOLVIDO que estava me incomodando no meu Honda Civic...",
-      "autor": "Maria Clara Santos",
-      "imagem": "imagens/barney.jpeg"
     },
     {
       "id": "4",
@@ -80,12 +69,14 @@
       ]
     },
     {
+      "id": "ENd99mM",
+      "titulo": "Dicas de manutenção preventiva",
       "autor": "Carlos Silva",
       "data": "15 de dezembro de 2024",
-      "texto": "Compartilhando dicas de manuten��o preventiva para carros esportivos...",
-      "imagem": "imagens/fastback 1.jpg",
+      "texto": "Compartilhando dicas de manutenção preventiva para carros esportivosaaa...",
       "membro": "20/11/2024",
-      "id": "ENd99mM"
+      "imagem": "imagens/fastback 1.jpg",
+      "categoria": "Manutenção"
     }
   ]
 }
